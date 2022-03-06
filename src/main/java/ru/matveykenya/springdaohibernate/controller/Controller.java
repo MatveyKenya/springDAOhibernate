@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.matveykenya.springdaohibernate.entity.Person;
-import ru.matveykenya.springdaohibernate.service.Service;
+import ru.matveykenya.springdaohibernate.service.PersonService;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ import java.util.List;
 @RequestMapping("/persons")
 public class Controller {
 
-    private final Service service;
+    private final PersonService service;
 
-    public Controller(Service service) {
+    public Controller(PersonService service) {
         this.service = service;
     }
 
     @GetMapping("/by-city")
-    public List<?> getPersonsByCity(@RequestParam String city){
+    public List<Person> getPersonsByCity(@RequestParam String city){
         return service.getPersonsByCity(city);
     }
 
