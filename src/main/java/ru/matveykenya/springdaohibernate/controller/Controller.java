@@ -71,4 +71,16 @@ public class Controller {
     ) {
         return service.updatePerson(id, name, surname, age, phoneNumber, cityOfLiving);
     }
+
+    @PutMapping("/update-by-query")
+    public Person updatePersonByQuery(
+            @RequestParam Long id,
+            @RequestParam String name,
+            @RequestParam String surname,
+            @RequestParam int age,
+            @RequestParam String phoneNumber,
+            @RequestParam String cityOfLiving
+    ) {
+        return service.updatePersonByQuery(id, name, surname, age, phoneNumber, cityOfLiving);
+    }
 }

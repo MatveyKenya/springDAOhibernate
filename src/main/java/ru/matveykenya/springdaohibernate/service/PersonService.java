@@ -50,17 +50,22 @@ public class PersonService {
         return person;
     }
 
-    public Person updatePerson(Long id, String name, String surname, int age, String phoneNumber, String cityOfLiving) {
-        return repository.updateParson(id, name, surname, age, phoneNumber, cityOfLiving);
+    public Person updatePersonByQuery(Long id, String name, String surname, int age, String phoneNumber, String cityOfLiving) {
+        repository.updatePersonByQuery(id, name, surname, age, phoneNumber, cityOfLiving);
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("not found Id = " + id));
+    }
+
+    public Person updatePerson(Long id, String name, String surname, int age, String phoneNumber, String cityOfLiving){
+        var person = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("not found Id = " + id));
+        person.setName(name);
+        person.setSurname(surname);
+        person.setAge(age);
+        person.setPhoneNumber(phoneNumber);
+        person.setCityOfLiving(cityOfLiving);
+        repository.save(person);
+        return person;
     }
 }
 
-//var person = repository.getById(id);
-//                //.orElseThrow(() -> new EntityNotFoundException("not found Id = " + id));
-//        person.setName(name);
-//        person.setSurname(surname);
-//        person.setAge(age);
-//        person.setPhoneNumber(phoneNumber);
-//        person.setCityOfLiving(cityOfLiving);
-//        repository.save(person);
-//        return person;
