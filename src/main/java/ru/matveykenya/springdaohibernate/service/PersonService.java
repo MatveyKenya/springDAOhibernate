@@ -1,6 +1,7 @@
 package ru.matveykenya.springdaohibernate.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.matveykenya.springdaohibernate.entity.Person;
 import ru.matveykenya.springdaohibernate.repository.PersonRepository;
 
@@ -50,6 +51,7 @@ public class PersonService {
         return person;
     }
 
+    @Transactional
     public Person updatePersonByQuery(Long id, String name, String surname, int age, String phoneNumber, String cityOfLiving) {
         repository.updatePersonByQuery(id, name, surname, age, phoneNumber, cityOfLiving);
         return repository.findById(id)

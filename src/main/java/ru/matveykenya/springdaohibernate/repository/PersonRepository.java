@@ -15,7 +15,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findAllByAgeLessThanOrderByAge(int age);
 
     //реализация второго способа обновления через Query на endpoint: /update-by-query
-    @Transactional
     @Modifying
     @Query("update Person p set p.name=:name, p.surname=:surname, p.age=:age, p.phoneNumber=:phoneNumber, p.cityOfLiving=:cityOfLiving where p.id=:id")
     void updatePersonByQuery(Long id, String name, String surname, int age, String phoneNumber, String cityOfLiving);
