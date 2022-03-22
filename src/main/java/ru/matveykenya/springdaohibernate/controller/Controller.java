@@ -1,11 +1,15 @@
 package ru.matveykenya.springdaohibernate.controller;
 
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.matveykenya.springdaohibernate.entity.Person;
 import ru.matveykenya.springdaohibernate.service.PersonService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/persons")
@@ -18,6 +22,7 @@ public class Controller {
     }
 
     // возвращает Entity по городу
+    @Secured("ROLE_READ")
     @GetMapping("/by-city")
     public List<Person> getPersonsByCity(@RequestParam String city){
         return service.getPersonsByCity(city);
@@ -25,6 +30,7 @@ public class Controller {
 
     //принимать возраст(age) и возвращать Entity из базы данных,
     // которые меньше переданного age и отсортированы по возрастанию
+    @RolesAllowed("ROLE_WRITE")
     @GetMapping("/by-age-less-then")
     public List<Person> getPersonsByAgeLessThen(@RequestParam int age) {
         return service.getPersonsByAgeLessThen(age);
@@ -32,6 +38,7 @@ public class Controller {
 
     //принимать имя и фамилию(name и surname) и возвращать Entity из базы данных,
     // которые соответствуют сочетанию name и surname и является Optional
+    @PreAuthorize("hasRole('ROLE_WRITE') or hasRole('ROLE_DELETE')")
     @GetMapping("/name-and-surname")
     public List<Person> getPersonsByAgeLessThen(@RequestParam String name, @RequestParam String surname) {
         return service.getPersonsByNameAndSurname(name, surname)
